@@ -1,9 +1,13 @@
 package com.example.eschool.web;
 
+import com.example.eschool.model.Pupil;
 import com.example.eschool.model.User;
+import com.example.eschool.service.PupilService;
 import com.example.eschool.service.SecurityService;
 import com.example.eschool.service.UserService;
 import com.example.eschool.validator.UserValidator;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,9 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+	@Autowired
+	private PupilService pupilService;
+	
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -59,6 +66,8 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
+    	List<Pupil> pupils = pupilService.findAll();
+    	model.addAttribute("pupils", pupils);
         return "welcome";
     }
 }
