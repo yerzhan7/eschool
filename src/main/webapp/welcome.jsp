@@ -33,7 +33,7 @@
 
         <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
 
-		<span>${pupils.size()}</span>
+		<span>${pupils.size()}  ${pupils.get(0).firstName} ${pupils.get(0).lastName} </span>
 
     </c:if>
 
