@@ -56,10 +56,10 @@ public class MainController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
         if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
+            model.addAttribute("error", "Неверный логин или пароль.");
 
         if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
+            model.addAttribute("message", "Вы успешно вышли из системы.");
 
         return "login";
     }
@@ -67,8 +67,13 @@ public class MainController {
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
     	List<Pupil> pupils = pupilService.findAll();
-    	Pupil dummyPupil = new Pupil(1L, "student","uchenik");
+    	
+    	// testing pupils TODO: delete
+    	Pupil dummyPupil = new Pupil(1L, "Смиронов","Юрий");
     	pupils.add(dummyPupil);
+    	Pupil dummyPupil2 = new Pupil(2L, "Антон","uche124nik");
+    	pupils.add(dummyPupil2);
+    	
     	model.addAttribute("pupils", pupils);
         return "welcome";
     }

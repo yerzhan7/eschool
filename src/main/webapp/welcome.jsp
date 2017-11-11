@@ -1,10 +1,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,9 +32,24 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+        <h2>Вы вошли как <b>${pageContext.request.userPrincipal.name}</b> | <a onclick="document.forms['logoutForm'].submit()">Выйти</a></h2>
 
-		<span>${pupils.size()}  ${pupils.get(0).firstName} ${pupils.get(0).lastName} </span>
+		<h3>Все ученики: </h3>
+
+		<table width="100%" class="table table-striped table-bordered" id="pupils" cellspacing="0">
+			<thead>
+	            <tr>
+	                <th>Фамилия</th>
+	                <th>Имя</th>
+	            </tr>
+	        </thead>
+			<c:forEach items="${pupils}" var="item">
+ 				<tr>
+					<td><c:out value="${item.lastName}" /></td>
+					<td><c:out value="${item.firstName}" /></td>
+ 				</tr>
+			</c:forEach>
+		</table>
 
     </c:if>
 
@@ -41,5 +57,10 @@
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#pupils).DataTable();
+} );
+</script>
 </body>
 </html>
