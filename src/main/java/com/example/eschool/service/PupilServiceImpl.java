@@ -7,28 +7,29 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.eschool.mapper.PupilsMapper;
 import com.example.eschool.model.Pupil;
-import com.example.eschool.repository.PupilRepository;
 
 @Service
 public class PupilServiceImpl implements PupilService {
 	
 	@Autowired
-	private PupilRepository pupilRepository;
+	private PupilsMapper pupilsMapper;
 	
 	@Override
 	public List<Pupil> findAll() {
-		return this.pupilRepository.findAll();
+		return this.pupilsMapper.findAll();
 	}
 
 	@Override
-	public Pupil create(Pupil pupil) {
-		return this.pupilRepository.save(pupil);
+	public void create(Pupil pupil) {
+		this.pupilsMapper.insert(pupil);
 	}
 
+	
 	@Override
 	public void deleteById(Long id) {
-		this.pupilRepository.delete(id);		
+		//this.pupilsMapper.delete(id);		
 	}
 	
 	

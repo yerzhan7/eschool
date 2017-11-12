@@ -66,14 +66,14 @@ public class MainController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-    	List<Pupil> pupils = pupilService.findAll();
-    	
-    	// testing pupils TODO: delete
     	Pupil dummyPupil = new Pupil(1L, "Смиронов","Юрий");
-    	pupils.add(dummyPupil);
     	Pupil dummyPupil2 = new Pupil(2L, "Антон","uche124nik");
-    	pupils.add(dummyPupil2);
+    	pupilService.create(dummyPupil);
+    	pupilService.create(dummyPupil2);
     	
+    	List<Pupil> pupils = pupilService.findAll(); 	
+    	// testing pupils TODO: delete
+
     	model.addAttribute("pupils", pupils);
         return "welcome";
     }

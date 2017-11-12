@@ -1,9 +1,5 @@
 package com.example.eschool.model;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "pupil")
 public class Pupil {
 
 
@@ -16,9 +12,7 @@ public class Pupil {
 		this.lastName = lastName;
 		this.firstName = firstName;
 	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	public Long getId() {
 		return id;
 	}
