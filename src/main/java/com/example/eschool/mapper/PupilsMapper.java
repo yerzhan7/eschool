@@ -16,7 +16,7 @@ public interface PupilsMapper {
 	@Select("select * from pupils")
 	List<Pupil> findAll();
 	
-	@Insert("insert into pupils(first_name,last_name) values(#{firstName},#{lastName})")
+	@Insert("insert into pupils(firstName,lastName) values(#{firstName},#{lastName})")
     void insert(Pupil pupil);
 	
 }

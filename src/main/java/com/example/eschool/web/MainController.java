@@ -5,6 +5,7 @@ import com.example.eschool.model.User;
 import com.example.eschool.service.PupilService;
 import com.example.eschool.service.SecurityService;
 import com.example.eschool.service.UserService;
+import com.example.eschool.validator.PupilValidator;
 import com.example.eschool.validator.UserValidator;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class MainController {
+	
     @Autowired
     private UserService userService;
 
@@ -27,6 +29,9 @@ public class MainController {
 
     @Autowired
     private UserValidator userValidator;
+    
+    @Autowired
+    private PupilValidator pupilValidator;
 
 	@Autowired
 	private PupilService pupilService;
@@ -50,7 +55,7 @@ public class MainController {
 
         securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "redirect:/welcome";
+        return "redirect:/pupils";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -64,17 +69,31 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-    	Pupil dummyPupil = new Pupil(1L, "Смиронов","Юрий");
-    	Pupil dummyPupil2 = new Pupil(2L, "Антон","uche124nik");
-    	pupilService.create(dummyPupil);
-    	pupilService.create(dummyPupil2);
+    @RequestMapping(value = {"/", "/pupils"}, method = RequestMethod.GET)
+    public String main_page(Model model) {
+    	List<Pupil> pupils = pupilService.findAll(); 
     	
-    	List<Pupil> pupils = pupilService.findAll(); 	
-    	// testing pupils TODO: delete
+    	model.addAttribute("pupil_list", pupils);
+        return "pupils";
+    }
+    
+    @RequestMapping(value = "/add_pupil", method = RequestMethod.GET)
+    public String add_pupil(Model model) {
+    	model.addAttribute("pupilForm", new Pupil());
+    	
+        return "add_pupil";
+    }
+    
+    @RequestMapping(value = "/add_pupil", method = RequestMethod.POST)
+    public String addPupil(@ModelAttribute("pupilForm") Pupil pupilForm, BindingResult bindingResult, Model model) {
+    	pupilValidator.validate(pupilForm, bindingResult);
 
-    	model.addAttribute("pupils", pupils);
-        return "welcome";
+        if (bindingResult.hasErrors()) {
+            return "add_pupil";
+        }
+
+        pupilService.create(pupilForm);
+
+        return "redirect:/pupils";
     }
 }

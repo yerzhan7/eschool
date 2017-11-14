@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Вход в Электронную Школу</title>
+    <title>Новый ученик</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
@@ -31,22 +31,28 @@
 
 <div class="container">
 
-    <form method="POST" action="${contextPath}/login" class="form-signin">
-        <h2 class="form-heading">Войти в Электронную Школу</h2>
+    <form:form method="POST" modelAttribute="pupilForm" class="form-signin">
+        <h2 class="form-heading">Новый ученик:</h2>
+        <spring:bind path="lastName">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="lastName" class="form-control" placeholder="Фамилия"
+                            autofocus="true"></form:input>
+                <form:errors path="lastName"></form:errors>
+            </div>
+        </spring:bind>
 
-        <div class="form-group ${error != null ? 'has-error' : ''}">
-            <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Логин"
-                   autofocus="true"/>
-            <input name="password" type="password" class="form-control" placeholder="Пароль"/>
-            <span>${error}</span>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <spring:bind path="firstName">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="firstName" class="form-control" placeholder="Имя"></form:input>
+                <form:errors path="firstName"></form:errors>
+            </div>
+        </spring:bind>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-            <h4 class="text-center"><a href="${contextPath}/registration">Зарегистрироватся</a></h4>
-        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Добавить</button>
+        <br>
+        <h4 class="text-left"><a href="${contextPath}/pupils">Назад</a></h4>
+    </form:form>
 
-    </form>
 
 </div>
 <!-- /container -->

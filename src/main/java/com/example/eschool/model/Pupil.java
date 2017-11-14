@@ -2,16 +2,9 @@ package com.example.eschool.model;
 
 public class Pupil {
 
-
 	private Long id;
 	private String lastName;
 	private String firstName;
-
-	public Pupil(Long id, String lastName, String firstName) {
-		this.id = id;
-		this.lastName = lastName;
-		this.firstName = firstName;
-	}
 
 	public Long getId() {
 		return id;

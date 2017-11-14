@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Create an account</title>
+    <title>Ученики | Электронная Школа</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
@@ -34,16 +34,16 @@
 
         <h2>Вы вошли как <b>${pageContext.request.userPrincipal.name}</b> | <a onclick="document.forms['logoutForm'].submit()">Выйти</a></h2>
 
-		<h3>Все ученики: </h3>
+		<h3>Все ученики: </h3><h3><a href="${contextPath}/add_pupil">Добавить ученика</a> </h3>
 
-		<table width="100%" class="table table-striped table-bordered" id="pupils" cellspacing="0">
+		<table width="100%" class="table table-striped table-bordered" id="pupils_table" cellspacing="0">
 			<thead>
 	            <tr>
 	                <th>Фамилия</th>
 	                <th>Имя</th>
 	            </tr>
 	        </thead>
-			<c:forEach items="${pupils}" var="item">
+			<c:forEach items="${pupil_list}" var="item">
  				<tr>
 					<td><c:out value="${item.lastName}" /></td>
 					<td><c:out value="${item.firstName}" /></td>
@@ -59,7 +59,7 @@
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function() {
-    $('#pupils).DataTable();
+    $('#pupils_table').DataTable();
 } );
 </script>
 </body>
