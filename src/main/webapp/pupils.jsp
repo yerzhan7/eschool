@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -15,8 +16,11 @@
     <meta name="author" content="">
 
     <title>Ученики | Электронная Школа</title>
-
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- /container -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -34,7 +38,47 @@
 
         <h2>Вы вошли как <b>${pageContext.request.userPrincipal.name}</b> | <a onclick="document.forms['logoutForm'].submit()">Выйти</a></h2>
 
-		<h3>Все ученики: </h3><h3><a href="${contextPath}/add_pupil">Добавить ученика</a> </h3>
+		<h3>Все ученики: </h3>
+		<button type="button" id="#add_pupil_btn"class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Добавить ученика</button>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Добавить ученика</h4>
+        </div>
+        
+        <div class="modal-body">
+	        <form:form method="POST" modelAttribute="pupilForm" class="form-signin">
+		        <h2 class="form-heading">Новый ученик:</h2>
+		        <spring:bind path="lastName">
+		            <div class="form-group ${status.error ? 'has-error' : ''}">
+		                <form:input type="text" path="lastName" class="form-control" placeholder="Фамилия"
+		                            autofocus="true"></form:input>
+		                <form:errors path="lastName"></form:errors>
+		            </div>
+		        </spring:bind>
+		
+		        <spring:bind path="firstName">
+		            <div class="form-group ${status.error ? 'has-error' : ''}">
+		                <form:input type="text" path="firstName" class="form-control" placeholder="Имя"></form:input>
+		                <form:errors path="firstName"></form:errors>
+		            </div>
+		        </spring:bind>
+				<div class="modal-footer">
+		        	<button class="btn btn-lg btn-primary btn-block" type="submit">Добавить</button>
+		        </div>
+	        </form:form>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
 
 		<table width="100%" class="table table-striped table-bordered" id="pupils_table" cellspacing="0">
 			<thead>
@@ -54,13 +98,6 @@
     </c:if>
 
 </div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#pupils_table').DataTable();
-} );
-</script>
+
 </body>
 </html>

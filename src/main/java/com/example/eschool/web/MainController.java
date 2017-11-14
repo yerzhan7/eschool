@@ -70,30 +70,25 @@ public class MainController {
     }
 
     @RequestMapping(value = {"/", "/pupils"}, method = RequestMethod.GET)
-    public String main_page(Model model) {
+    public String main_page(Model model, String error) {
     	List<Pupil> pupils = pupilService.findAll(); 
     	
     	model.addAttribute("pupil_list", pupils);
+    	model.addAttribute("pupilForm", new Pupil());
         return "pupils";
     }
     
-    @RequestMapping(value = "/add_pupil", method = RequestMethod.GET)
-    public String add_pupil(Model model) {
-    	model.addAttribute("pupilForm", new Pupil());
-    	
-        return "add_pupil";
-    }
-    
-    @RequestMapping(value = "/add_pupil", method = RequestMethod.POST)
+    @RequestMapping(value = "/pupils", method = RequestMethod.POST)
     public String addPupil(@ModelAttribute("pupilForm") Pupil pupilForm, BindingResult bindingResult, Model model) {
     	pupilValidator.validate(pupilForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "add_pupil";
+            return "pupils";
         }
 
         pupilService.create(pupilForm);
 
         return "redirect:/pupils";
     }
+    
 }
