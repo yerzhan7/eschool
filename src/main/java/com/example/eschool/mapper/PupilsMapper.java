@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Component;
 
 import com.example.eschool.model.Pupil;
@@ -17,7 +16,7 @@ public interface PupilsMapper {
 	@Select("select * from pupils")
 	List<Pupil> findAll();
 	
-	@Insert("insert into pupils(firstName,lastName) values(#{firstName},#{lastName})")
+	@Insert("insert into pupils(first_name,last_name) values(#{firstName},#{lastName})")
     void insert(Pupil pupil);
 	
 }
