@@ -1,7 +1,7 @@
 package com.example.eschool.service;
 
+import com.example.eschool.mapper.UsersMapper;
 import com.example.eschool.model.User;
-import com.example.eschool.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,12 +17,12 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
-    private UserRepository userRepository;
+    private UsersMapper usersMapper;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = usersMapper.findByUsername(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
