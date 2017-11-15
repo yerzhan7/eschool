@@ -26,7 +26,7 @@ public class PupilServiceImpl implements PupilService {
 
 	@Override
 	public void deleteById(Long id) {
-		//this.pupilsMapper.delete(id);		
+		this.pupilsMapper.deleteById(id);		
 	}
 	
 }

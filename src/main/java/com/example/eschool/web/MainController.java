@@ -1,14 +1,9 @@
 package com.example.eschool.web;
 
-import com.example.eschool.model.Pupil;
 import com.example.eschool.model.User;
-import com.example.eschool.service.PupilService;
 import com.example.eschool.service.SecurityService;
 import com.example.eschool.service.UserService;
-import com.example.eschool.validator.PupilValidator;
 import com.example.eschool.validator.UserValidator;
-
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,12 +24,6 @@ public class MainController {
 
     @Autowired
     private UserValidator userValidator;
-    
-    @Autowired
-    private PupilValidator pupilValidator;
-
-	@Autowired
-	private PupilService pupilService;
 	
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -69,26 +58,5 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/pupils"}, method = RequestMethod.GET)
-    public String main_page(Model model, String error) {
-    	List<Pupil> pupils = pupilService.findAll(); 
-    	
-    	model.addAttribute("pupil_list", pupils);
-    	model.addAttribute("pupilForm", new Pupil());
-        return "pupils";
-    }
-    
-    @RequestMapping(value = "/pupils", method = RequestMethod.POST)
-    public String addPupil(@ModelAttribute("pupilForm") Pupil pupilForm, BindingResult bindingResult, Model model) {
-    	pupilValidator.validate(pupilForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "pupils";
-        }
-
-        pupilService.create(pupilForm);
-
-        return "redirect:/pupils";
-    }
     
 }

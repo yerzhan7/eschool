@@ -5,6 +5,7 @@ public class Pupil {
 	private Long id;
 	private String lastName;
 	private String firstName;
+	private String schoolClass;
 
 	public Long getId() {
 		return id;
@@ -28,6 +29,14 @@ public class Pupil {
 	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getSchoolClass() {
+		return schoolClass;
+	}
+
+	public void setSchoolClass(String schoolClass) {
+		this.schoolClass = schoolClass;
 	}
 	
 }

@@ -28,7 +28,7 @@ public class PupilValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Pupil pupil = (Pupil) o;
 
-        // First name and last name - at least 2, at most 32.
+        // First name, last name, schoolClass - size limit.
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
         if (pupil.getFirstName().length() < 2 || pupil.getFirstName().length() > 32) {
             errors.rejectValue("firstName", "Size.pupilForm.name");
@@ -39,6 +39,12 @@ public class PupilValidator implements Validator {
             errors.rejectValue("lastName", "Size.pupilForm.name");
         }
 
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "schoolClass", "NotEmpty");
+        if (pupil.getSchoolClass().length() < 1 || pupil.getLastName().length() > 20) {
+            errors.rejectValue("schoolClass", "Size.pupilForm.schoolClass");
+        }
+        
+        
         // First name and last name - text only.
         if (!(pupil.getFirstName() != null && pupil.getFirstName().isEmpty())) {  
         	pattern = Pattern.compile(STRING_PATTERN);  
@@ -46,7 +52,7 @@ public class PupilValidator implements Validator {
         	if (!matcher.matches()) {  
         		errors.rejectValue("firstName", "Text.pupilForm.firstName");  
         	}  
-        }  
+        }
 
         if (!(pupil.getLastName() != null && pupil.getLastName().isEmpty())) {  
         	pattern = Pattern.compile(STRING_PATTERN);  
